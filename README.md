@@ -10,7 +10,12 @@
 
 2.如果网络环境不理想强烈建议下载好镜像再导入，使用DockerPull，十分推荐路由器上有一个openclash
 
-注意：所有出现“Do you want to continue? [Y/n] ” 的地方请输入Y确认
+# 注意！！！：
+所有出现“Do you want to continue? [Y/n] ” 的地方请输入Y确认
+
+多行的bash命令，如果不确定请逐行执行，带有文件写入的不算
+
+json建议用记事本创建导入
 
 
 ## 🔌 登录刷成 Armbian 的电视盒子
@@ -92,7 +97,7 @@ Armbian 支持直接安装：
 sudo apt install rtl-sdr
 ```
 
-卸载 DVB-T 驱动防止冲突：
+卸载 DVB-T 驱动防止冲突（拔掉棒子再操作，否则会占用）如果不确定逐行执行：
 
 ```bash
 sudo rmmod dvb_usb_rtl28xxu
