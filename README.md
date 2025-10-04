@@ -49,7 +49,7 @@
   ```bash
   sudo apt update && sudo apt upgrade -y
   ```
-- 确认系统架构：
+- 确认系统架构（最好是aarch64）：
   ```bash
   uname -m
   ```
