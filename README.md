@@ -105,7 +105,7 @@ rtl_test
 
 ---
 
-## 🐳 三、部署 OpenWebRX+ 容器
+## 🐳 三、部署 OpenWebRX+ 容器（网络环境允许的情况用这个）
 
 创建工作目录：
 
@@ -138,6 +138,59 @@ docker-compose up -d
 ```
 
 ---
+## 🐳 三、部署 OpenWebRX+ 容器（网络环境不好的情况用这个）
+
+使用 docker-pull-tar 下载 OpenWebRX+ 镜像（适用于 Armbian）
+
+如果你的 Armbian 系统无法直接使用 `docker pull` 命令，或者你希望提前下载镜像并离线导入，可以使用 [topcss/docker-pull-tar](https://github.com/topcss/docker-pull-tar) 工具。该工具支持国内镜像源加速，适合 ARM 架构设备。
+
+### 📦 推荐镜像信息
+
+- 镜像名称：`slechev/openwebrxplus-softmbe:latest`
+- 架构：`arm64` 或 `armhf`（根据你的设备架构确认）
+- 仓库地址（默认）：`docker.xuanyuan.me`
+
+---
+
+### 🧰 下载工具
+
+1. 打开项目页面：[https://github.com/topcss/docker-pull-tar](https://github.com/topcss/docker-pull-tar)
+2. 进入 Releases 页面，下载 `DockerPull.exe`（适用于 Windows）：
+
+
+### 🚀 下载镜像并生成 tar 包（命令行方式）
+
+在 Windows 上打开命令行，执行：
+
+```bash
+DockerPull.exe -i slechev/openwebrxplus-softmbe:latest -a arm64 -r docker.xuanyuan.me
+```
+
+执行后将生成一个镜像文件，例如：
+
+```
+slechev_openwebrxplus-softmbe_latest_arm64.tar
+```
+
+---
+
+### 📁 导入到 Armbian 系统
+
+将 `.tar` 文件通过 U 盘或 SCP 传输到 Armbian 系统，然后执行：
+
+```bash
+docker load -i slechev_openwebrxplus-softmbe_latest_arm64.tar
+```
+
+导入成功后可通过以下命令验证：
+
+```bash
+docker images
+```
+
+---
+
+这样你就完成了镜像的下载与导入，无需联网即可部署 OpenWebRX+ 接收站。
 
 ## 🔐 四、添加管理员账户
 
