@@ -41,7 +41,7 @@
 
 ### ✅ 登录成功后建议操作
 
-- 修改默认密码：
+- 修改默认密码（只在局域网用就不用改了）：
   ```bash
   passwd
   ```
@@ -64,9 +64,9 @@
 确保你的 Armbian 系统已更新并安装 Docker：
 
 ```bash
-sudo apt update
 sudo apt install docker.io docker-compose git
 ```
+需要敲Y确认
 
 插入 RTL-SDR 设备后，确认识别：
 
