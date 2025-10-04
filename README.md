@@ -77,7 +77,7 @@ lsusb
 你应该看到类似：
 
 ```
-Realtek RTL2838 DVB-T
+Bus 001 Device 002: ID 0bda:2832 Realtek Semiconductor Corp. RTL2832U DVB-T
 ```
 
 ---
