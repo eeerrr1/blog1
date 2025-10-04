@@ -10,6 +10,8 @@
 
 2.如果网络环境不理想强烈建议下载好镜像再导入，使用DockerPull，十分推荐路由器上有一个openclash
 
+注意：所有出现“Do you want to continue? [Y/n] ” 的地方请输入Y确认
+
 
 ## 🔌 登录刷成 Armbian 的电视盒子
 
