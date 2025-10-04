@@ -45,7 +45,7 @@
   ```bash
   passwd
   ```
-- 更新系统：
+- 更新系统(网络不好会失败，一般需要一段时间)：
   ```bash
   sudo apt update && sudo apt upgrade -y
   ```
