@@ -105,92 +105,89 @@ rtl_test
 
 ---
 
-## 🐳 三、部署 OpenWebRX+ 容器（网络环境允许的情况用这个）
+## 🐳 使用 Docker 部署 OpenWebRX+（适用于 Armbian）
 
-创建工作目录：
+推荐使用镜像：`slechev/openwebrxplus-softmbe:latest`  
+该镜像支持 RTL-SDR 并集成数字语音解码功能，适配 ARM 架构设备。
+
+### 📦 下载镜像（可选离线方式）
+
+如无法联网，可使用 [docker-pull-tar 工具](https://github.com/topcss/docker-pull-tar) 在 Windows 上下载：
 
 ```bash
-mkdir -p ~/openwebrx-plus
+DockerPull.exe -i slechev/openwebrxplus-softmbe:latest -a arm64 -r docker.xuanyuan.me
+```
+
+然后将生成的 `.tar` 文件传入 Armbian 系统，导入：
+
+```bash
+docker load -i slechev_openwebrxplus-softmbe_latest_arm64.tar
+```
+
+---
+
+### 🚀 启动容器（推荐使用 docker-compose）
+
+1. 创建工作目录：
+
+```bash
+mkdir -p ~/openwebrx-plus/settings
 cd ~/openwebrx-plus
 ```
 
-创建 `docker-compose.yml` 文件：
+2. 创建配置文件 `settings/config.json`（可选）：
+
+```json
+{
+  "general": {
+    "receiver_name": "My RTL-SDR Station",
+    "location": "Zhenjiang, China",
+    "admin_password": "your_secure_password"
+  },
+  "receivers": [
+    {
+      "driver": "rtl_sdr",
+      "frequency": 144800000,
+      "ppm": 0
+    }
+  ]
+}
+```
+
+3. 创建 `docker-compose.yml` 文件：
 
 ```yaml
-version: "2"
+version: '3'
 services:
   openwebrx:
-    image: jketterl/openwebrx-plus
+    image: slechev/openwebrxplus-softmbe:latest
     container_name: openwebrx
+    restart: always
     ports:
       - "8073:8073"
     devices:
-      - "/dev/bus/usb/001:/dev/bus/usb/001"
+      - "/dev/bus/usb:/dev/bus/usb"
     volumes:
       - "./settings:/var/lib/openwebrx"
-    restart: always
 ```
 
-启动容器：
+4. 启动容器：
 
 ```bash
 docker-compose up -d
 ```
 
 ---
-## 🐳 三、部署 OpenWebRX+ 容器（网络环境不好的情况用这个）
 
-使用 docker-pull-tar 下载 OpenWebRX+ 镜像（适用于 Armbian）
+### ✅ 登录与验证
 
-如果你的 Armbian 系统无法直接使用 `docker pull` 命令，或者你希望提前下载镜像并离线导入，可以使用 [topcss/docker-pull-tar](https://github.com/topcss/docker-pull-tar) 工具。该工具支持国内镜像源加速，适合 ARM 架构设备。
-
-### 📦 推荐镜像信息
-
-- 镜像名称：`slechev/openwebrxplus-softmbe:latest`
-- 架构：`arm64` 或 `armhf`（根据你的设备架构确认）
-- 仓库地址（默认）：`docker.xuanyuan.me`
+- 浏览器访问：`http://<你的盒子IP>:8073`
+- 使用 `config.json` 中设置的管理员密码登录
+- 确认 RTL-SDR 设备识别成功，频率可调，插件可加载
 
 ---
 
-### 🧰 下载工具
-
-1. 打开项目页面：[https://github.com/topcss/docker-pull-tar](https://github.com/topcss/docker-pull-tar)
-2. 进入 Releases 页面，下载 `DockerPull.exe`（适用于 Windows）：
-
-
-### 🚀 下载镜像并生成 tar 包（命令行方式）
-
-在 Windows 上打开命令行，执行：
-
-```bash
-DockerPull.exe -i slechev/openwebrxplus-softmbe:latest -a arm64 -r docker.xuanyuan.me
-```
-
-执行后将生成一个镜像文件，例如：
-
-```
-slechev_openwebrxplus-softmbe_latest_arm64.tar
-```
-
----
-
-### 📁 导入到 Armbian 系统
-
-将 `.tar` 文件通过 U 盘或 SCP 传输到 Armbian 系统，然后执行：
-
-```bash
-docker load -i slechev_openwebrxplus-softmbe_latest_arm64.tar
-```
-
-导入成功后可通过以下命令验证：
-
-```bash
-docker images
-```
-
----
-
-这样你就完成了镜像的下载与导入，无需联网即可部署 OpenWebRX+ 接收站。
+如果你希望我帮你把整个 README 结构重新排版，包括系统准备、镜像下载、容器部署、插件配置等章节，我可以继续帮你整理成一份完整的文档。你想我继续吗？
 
 ## 🔐 四、添加管理员账户
 
